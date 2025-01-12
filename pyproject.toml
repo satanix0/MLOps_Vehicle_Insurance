@@ -1,0 +1,14 @@
+# This is the configuration file for the MLOps Vehicle Insurance project.
+# It includes project metadata and dependencies.
+
+[project]
+name = "src"
+version = "0.0.1"
+description = "An MLOps project to demonstrate industry practices"
+authors = [{name = "Piyush", email = "piyushkr172@gmail.com"}]
+
+[tool.setuptools]
+packages = {find = {}}
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt"}
