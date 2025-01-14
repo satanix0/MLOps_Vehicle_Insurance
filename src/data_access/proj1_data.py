@@ -11,6 +11,9 @@ from src.exception import MyException
 class Proj1Data:
     """
     A class to export MongoDB records as a pandas DataFrame.
+    >> Establishes connection with MongoDB
+    >> imports entire collection as a pandas DataFrame
+    >> returns the dataframe
     """
 
     def __init__(self) -> None:
@@ -26,7 +29,7 @@ class Proj1Data:
 
     def export_collection_as_dataframe(self, collection_name: str, database_name: Optional[str] = None) -> pd.DataFrame:
         """
-        Exports an entire MongoDB collection as a pandas DataFrame.
+        imports an entire MongoDB collection as a pandas DataFrame.
 
         Parameters:
         ----------

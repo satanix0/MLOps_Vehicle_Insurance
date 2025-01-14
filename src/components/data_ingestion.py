@@ -14,7 +14,7 @@ from src.data_access.proj1_data import Proj1Data
 class DataIngestion:
     def __init__(self, data_ingestion_config: DataIngestionConfig = DataIngestionConfig()):
         """
-        Fetches the metadata (dir, path etc) for data ingestion
+        Fetches the metadata (dir, path etc) for data ingestion from config_entity.py
         :param data_ingestion_config: configuration for data ingestion
         """
         try:
@@ -25,13 +25,13 @@ class DataIngestion:
     def export_data_into_feature_store(self) -> DataFrame:
         """
         Method Name :   export_data_into_feature_store
-        Description :   This method exports data from mongodb to csv file
+        Description :   This method exports data from MongoDB to csv file
 
-        Output      :   data is returned as artifact of data ingestion components
+        Output      :   data is stored as artifact of data_ingestion.py components and also returned as DataFrame
         On Failure  :   Write an exception log and then raise an exception
         """
         try:
-            logging.info(f"Exporting data from mongodb")
+            logging.info(f"Exporting data from MongoDB")
 
             # fetch the data from the MongoDB collection and return it as DataFrame
             my_data = Proj1Data()
@@ -39,12 +39,15 @@ class DataIngestion:
                 collection_name=self.data_ingestion_config.collection_name)
 
             logging.info(f"Shape of dataframe: {dataframe.shape}")
+            # using feature_store_file_path defined in the config_entity.py to save this dataframe as csv
             feature_store_file_path = self.data_ingestion_config.feature_store_file_path
             dir_path = os.path.dirname(feature_store_file_path)
             os.makedirs(dir_path, exist_ok=True)
             logging.info(
                 f"Saving exported data into feature store file path: {feature_store_file_path}")
             dataframe.to_csv(feature_store_file_path, index=False, header=True)
+
+            # return the dataframe for further processing
             return dataframe
 
         except Exception as e:
@@ -70,7 +73,7 @@ class DataIngestion:
             )
 
             logging.info(f"Exporting train and test files to specified path.")
-            
+
             # Exporting train and test files to specified path.
             dir_path = os.path.dirname(
                 self.data_ingestion_config.training_file_path)
@@ -93,26 +96,30 @@ class DataIngestion:
         On Failure  :   Write an exception log and then raise an exception
         """
         logging.info(
-            "Entered initiate_data_ingestion method of Data_Ingestion class")
+            "Entered initiate_data_ingestion method of DataIngestion class")
 
         try:
-            
+
             dataframe = self.export_data_into_feature_store()
 
-            logging.info("Got the data from mongodb")
+            logging.info("Got the data from MongoDB")
 
             self.split_data_as_train_test(dataframe)
 
-            logging.info("Performed train test split on the dataset")
+            logging.info("Performed train-test split on the dataset")
+            
+            logging.info("Saving the artifacts (train and test data)")
 
-            logging.info(
-                "Exited initiate_data_ingestion method of Data_Ingestion class"
-            )
-
+            # Saving the artifacts(train and test data) to the specified directory in config_entity.py
+            # using a dataclass "DataIngestionArtifact"
             data_ingestion_artifact = DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
                                                             test_file_path=self.data_ingestion_config.testing_file_path)
 
             logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
+            
+            logging.info(
+                "Exited initiate_data_ingestion method of Data_Ingestion class"
+            )
             return data_ingestion_artifact
 
         except Exception as e:

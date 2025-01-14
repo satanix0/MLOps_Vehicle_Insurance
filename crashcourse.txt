@@ -35,7 +35,33 @@ TOML is becoming the standard for Python packaging metadata.
 When you run pip install -r requirements.txt, it ensures that all dependencies are installed. The pyproject.toml file can reference 
 it (as we did) so that package dependencies are automatically pulled from there.
 
+------------------------------------------------------------------------------------------------------------------------------------
+What is dataclass?
+A dataclass in Python is a decorator that simplifies the process of creating classes 
+designed to primarily store data.
+Usage:
+        from dataclasses import dataclass
 
+        @dataclass
+        class Book:
+            title: str
+            author: str
+            pages: int
+            price: float
+
+        # Example Usage
+        book1 = Book("1984", "George Orwell", 328, 19.99)
+        book2 = Book("1984", "George Orwell", 328, 19.99)
+
+        print(book1)  # Output: Book(title='1984', author='George Orwell', pages=328, price=19.99)
+        print(book1 == book2)  # Output: True
+
+What happens here?
+
+The @dataclass decorator generates the __init__, __repr__, and __eq__ methods automatically.
+The code is cleaner, and you still get all the necessary functionality of traditional class.
+
+  
 ------------------------------------------------------------------------------------------------------------------------------------
 
 Cross-Origin Resource Sharing (CORS)
