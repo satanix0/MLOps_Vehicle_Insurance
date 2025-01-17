@@ -173,3 +173,5 @@ cython_debug/
 
 # Manually added
 artifact/
+play.py
+demo.py

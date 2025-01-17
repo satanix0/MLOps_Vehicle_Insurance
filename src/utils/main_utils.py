@@ -5,9 +5,11 @@ import numpy as np
 import dill
 import yaml
 from pandas import DataFrame
+import json
 
 from src.exception import MyException
 from src.logger import logging
+from dataclasses import asdict
 
 
 def read_yaml_file(file_path: str) -> dict:
@@ -111,7 +113,7 @@ def save_object(file_path: str, obj: object) -> None:
 def load_object(file_path: str) -> object:
     """
     loads and returns saved model/object from project directory.
-    
+
     file_path: str location of file to load
     return: Model/Obj
     """
@@ -119,10 +121,36 @@ def load_object(file_path: str) -> object:
         with open(file_path, "rb") as file_obj:
             obj = dill.load(file_obj)
         return obj
-    
+
     except Exception as e:
         raise MyException(e, sys) from e
 
+
+def save_metrics(file_path: str, metrics: object) -> None:
+    """
+    Save the metrics from a dataclass object into a JSON file.
+    Args:
+        file_path (str): The path where the JSON file will be saved.
+        metrics (object): A dataclass object containing metrics to save.
+    Returns:
+        None
+    """
+    logging.info("Entered the save_metrics method of utils")
+    try:
+        # Convert the dataclass object to a dictionary
+        metrics_data = asdict(metrics)
+
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+        # Write the data to the JSON file
+        with open(file_path, "w") as file:
+            json.dump(metrics_data, file, indent=4)
+
+        logging.info(f"Metrics successfully saved to {file_path}")
+    
+    except Exception as e:
+        raise MyException(e, sys) from e
 
 # def drop_columns(df: DataFrame, cols: list)-> DataFrame:
 

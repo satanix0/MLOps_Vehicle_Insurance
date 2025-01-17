@@ -104,7 +104,7 @@ class DataValidation:
             validation_error_msg = ""
 
             logging.info("Starting data validation")
-            train_df, test_df = (DataValidation.read_data(file_path=self.data_ingestion_artifact.trained_file_path),
+            train_df, test_df = (DataValidation.read_data(file_path=self.data_ingestion_artifact.train_file_path),
                                  DataValidation.read_data(file_path=self.data_ingestion_artifact.test_file_path))
 
             # Checking col len of dataframe for train df

@@ -35,7 +35,7 @@ class DataIngestion:
 
             # fetch the data from the MongoDB collection and return it as DataFrame
             my_data = Proj1Data()
-            dataframe = my_data.export_collection_as_dataframe(
+            dataframe = my_data.import_collection_as_dataframe(
                 collection_name=self.data_ingestion_config.collection_name)
 
             logging.info(f"Shape of dataframe: {dataframe.shape}")
@@ -112,7 +112,7 @@ class DataIngestion:
 
             # Saving the artifacts(train and test data) to the specified directory in config_entity.py
             # using a dataclass "DataIngestionArtifact"
-            data_ingestion_artifact = DataIngestionArtifact(trained_file_path=self.data_ingestion_config.training_file_path,
+            data_ingestion_artifact = DataIngestionArtifact(train_file_path=self.data_ingestion_config.training_file_path,
                                                             test_file_path=self.data_ingestion_config.testing_file_path)
 
             logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
