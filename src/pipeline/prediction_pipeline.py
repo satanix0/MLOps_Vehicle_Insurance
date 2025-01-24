@@ -40,18 +40,6 @@ class VehicleData:
         except Exception as e:
             raise MyException(e, sys) from e
 
-    def get_vehicle_input_data_frame(self) -> DataFrame:
-        """
-        This function returns a DataFrame from USvisaData class input
-        """
-        try:
-
-            vehicle_input_dict = self.get_vehicle_data_as_dict()
-            return DataFrame(vehicle_input_dict)
-
-        except Exception as e:
-            raise MyException(e, sys) from e
-
     def get_vehicle_data_as_dict(self):
         """
         This function returns a dictionary from VehicleData class input
@@ -82,6 +70,17 @@ class VehicleData:
         except Exception as e:
             raise MyException(e, sys) from e
 
+    def get_vehicle_input_data_frame(self) -> DataFrame:
+        """
+        This function returns a DataFrame from Vehicle Insurance Data input
+        """
+        try:
+            vehicle_input_dict = self.get_vehicle_data_as_dict()
+            return DataFrame(vehicle_input_dict)
+
+        except Exception as e:
+            raise MyException(e, sys) from e
+
 
 class VehicleDataClassifier:
     def __init__(self, prediction_pipeline_config: VehiclePredictorConfig = VehiclePredictorConfig(),) -> None:
@@ -90,6 +89,7 @@ class VehicleDataClassifier:
         """
         try:
             self.prediction_pipeline_config = prediction_pipeline_config
+
         except Exception as e:
             raise MyException(e, sys)
 
@@ -101,6 +101,7 @@ class VehicleDataClassifier:
         try:
             logging.info(
                 "Entered predict method of VehicleDataClassifier class")
+            
             model = Proj1Estimator(
                 bucket_name=self.prediction_pipeline_config.model_bucket_name,
                 model_path=self.prediction_pipeline_config.model_file_path,

@@ -36,7 +36,7 @@ class MyModel:
     def predict(self, dataframe: pd.DataFrame) -> DataFrame:
         """
         Function accepts preprocessed input df (with all custom transformations already applied),
-        applies scaling using preprocessing_object, and performs prediction on transformed features.
+        applies scaling using preprocessing_object, and returns target prediction on transformed features.
         """
         try:
             logging.info("Starting prediction process.")
@@ -47,6 +47,7 @@ class MyModel:
 
             # Step 2: Perform prediction using the trained model
             logging.info("Using the trained model to get predictions")
+            
             predictions = self.trained_model_object.predict(
                 transformed_feature)
 
